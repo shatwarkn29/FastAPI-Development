@@ -9,60 +9,68 @@ class Post(BaseModel):
     published: bool = True
 
 class PostBase(BaseModel):
+    """Configuration for PostBase class."""
     title:str
     content:str
     published: bool = True
 
 class PostCreate(PostBase):
-    pass 
-
-class PostUpdate(PostBase):
+    """Schema for creating a new post."""
     pass
 
-class User_out(BaseModel):
+class PostUpdate(PostBase):
+    """Schema for updating a post."""
+    pass
+
+class Userout(BaseModel):
+    """Schema for user output, including user details."""
     id : int
     email: EmailStr
     created_at: datetime
 
     class config:
-        orm_mode = True
+        from_attributes = True
 
 class PostResponse(PostBase):
+    """Schema for responding with a post (including metadata)."""
     id : int
     created_at : datetime
     owner_id : int
-    owner : User_out
-    
-    class config:
-        orm_mode = True
+    owner : Userout
+    class Config:
+        from_attributes = True
 
-class Post_out(BaseModel):
+class Postout(BaseModel):
+    """Schema for post with response data and vote count."""
     post : PostResponse
     votes : int
 
-class User_Create(BaseModel):
+class UserCreate(BaseModel):
+    """Schema for creating a user."""
     email: EmailStr
     password : str
 
-
-
-class Get_User(User_out):
-    pass    
-
+class GetUser(Userout):
+    """Schema for retrieving user information."""
+    pass
 
 class Userlogin(BaseModel):
+    """Schema for user login with email and password."""
     email : EmailStr
     password : str
 
 class Token(BaseModel):
+    """Schema for returning a token."""
     access_token : str
     token_type : str
 
 
 class TokenData(BaseModel):
+    """Schema for the data embedded in the token."""
     id : int
 
 
 class Vote(BaseModel):
+    """Schema for vote information related to a post."""
     post_id : int
     dir : conint(ge=0 ,le=1)
