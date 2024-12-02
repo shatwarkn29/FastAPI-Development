@@ -1,16 +1,41 @@
 ﻿[MASTER]
+disable=W0611, W0703, W0107, C0114, C0115, C0116, C0301, C0303, C0325, C0411, R0903, R1705
 
-disable=
-    W0611  # Unused import
-    W0703  # Catch too broad exception
-    W0107  # Unnecessary pass statement
-    C0114  # Missing module docstring
-    C0115  # Missing class docstring
-    C0116  # Missing function or method docstring
-    C0301  # Line too long
-    C0303  # Trailing whitespace
-    C0325   
-  # Unnecessary parens after 'if' keyword
-    C0411  # Wrong import order
-    R0903  # Too few public methods
-    R1705  # Unnecessary "else" after "return"
+[REPORTS]
+reports=no
+msg-template={msg_id}: {msg}
+
+[FORMAT]
+max-line-length=100
+indent-string='    '
+single-line-class-stmt=yes
+single-line-if-stmt=yes
+
+[SIMILARITIES]
+min-similarity-lines=4
+
+[DESIGN]
+max-args=5
+max-branches=12
+max-locals=15
+max-statements=50
+
+[TYPECHECK]
+generated-members=
+
+[CLASSES]
+valid-classmethod-first-arg=cls
+
+[VARIABLES]
+ignored-argument-names=_.*|^ignored_|^unused_
+allow-global-unused-variables=yes
+
+[IMPORTS]
+allow-any-import-level=yes
+known-third-party=flask,django,requests
+
+[MISCELLANEOUS]
+notes=FIXME,XXX,TODO
+
+[LOGGING]
+logging-format-style=new
