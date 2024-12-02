@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -31,6 +31,13 @@ jobs:
           pip install -r requirements.txt  # Install dependencies from requirements.txt
           pip install pylint  # Install pylint separately if not in requirements.txt
 
+      - name: Ensure UTF-8 encoding for pylint config
+        run: |
+          # Ensure that the .pylintrc file is in UTF-8 encoding to avoid issues
+          chcp 65001  # Set the active code page to UTF-8 on Windows
+          type .pylintrc  # Check content to make sure it's being read correctly
+
       - name: Analyzing the code with pylint
         run: |
-          pylint $(git ls-files '*.py')
+          chcp 65001  # Set the active code page to UTF-8 on Windows
+          pylint $(git ls-files '*.py')  # Run pylint on Python files
