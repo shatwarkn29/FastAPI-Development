@@ -1,37 +1,40 @@
+"""
+Database module for the application.
+
+This module sets up the SQLAlchemy database connection, session maker, and base declarative class.
+"""
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.engine.url import URL
 from .config import Settings
 
-# import time
-# import psycopg2
-# from psycopg2.extras import RealDictCursor
-# from sqlalchemy.orm import Session
+# Construct the database URL
+SQLALCHEMY_DATABASE_URL = (
+    f"postgresql://{Settings.database_username}:"
+    f"{Settings.database_password}@{Settings.database_hostname}:"
+    f"{Settings.database_port}/{Settings.database_name}"
+)
 
-SQLALCHEMY_DATABASE_URL = f'postgresql://{Settings.database_username}:{Settings.database_password}@{Settings.database_hostname}:{Settings.database_port}/{Settings.database_name}'
-#postgresql://postgres:Resideo#0912@localhost/Fastapi
+# Create the SQLAlchemy engine
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
+# Create a configured "Session" class
 Sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+# Create the base class for declarative models
 Base = declarative_base()
 
+
 def get_db():
+    """
+    Dependency function to provide a SQLAlchemy session.
+    
+    Yields:
+        sqlalchemy.orm.Session: A SQLAlchemy session.
+    """
     db = Sessionlocal()
-    try: 
+    try:
         yield db
     finally:
         db.close()
-
-# while True:
-#     try:
-#         conn = psycopg2.connect(host='localhost', database ='Fastapi' , user='postgres' , password ='Resideo#0912' , cursor_factory=RealDictCursor)
-#         cursor = conn.cursor()
-#         print("Database connection was successfull")
-#         break
-#     except Exception as error:
-#         print("Connection to database failed")
-#         print("Error:", error) 
-#         time.sleep(5)
- 
