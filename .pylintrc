@@ -1,25 +1,16 @@
 ﻿[MASTER]
 
-# Ignore these errors
-disable = 
-    *too-few-public-methods
-    *unused-import
-    *missing-final-newline
-    *f-string-without-interpolation
-    *ungrouped-imports
-
-# Length of the line should be less than 100 characters 
-# You can adjust this value as needed
-max-line-length = 100
-
-# Conventions
-# These are some common conventions you can enable
-# * E for errors
-# * C for conventions
-# * W for warnings
-# * R for refactorings
-# You can find the full list here - https://pylint.pycqa.org/en/stable/messages/messages.html
-# For example, to enable checking for docstrings, uncomment the following line
-# enable = 
-#     * missing-module-docstring
-#     * missing-function-docstring
+disable=
+    W0611  # Unused import
+    W0703  # Catch too broad exception
+    W0107  # Unnecessary pass statement
+    C0114  # Missing module docstring
+    C0115  # Missing class docstring
+    C0116  # Missing function or method docstring
+    C0301  # Line too long
+    C0303  # Trailing whitespace
+    C0325   
+  # Unnecessary parens after 'if' keyword
+    C0411  # Wrong import order
+    R0903  # Too few public methods
+    R1705  # Unnecessary "else" after "return"
