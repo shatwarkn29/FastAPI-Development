@@ -35,9 +35,6 @@ jobs:
         run: |
           pylint $(git ls-files '*.py') --exit-zero > pylint_report.txt
 
-      - name: Debug Workspace
-        run: ls -la
-
       - name: Debug Pylint Report Content
         run: cat pylint_report.txt
 
