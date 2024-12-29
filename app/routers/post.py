@@ -1,9 +1,10 @@
-from fastapi import FastAPI ,Response , status, HTTPException , Depends , APIRouter
-from .. import models , schemas , utils , oauth2
+from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
+from typing import Optional, List 
+from sqlalchemy import func
 from sqlalchemy.orm import Session
+
+from .. import models, schemas, utils, oauth2 
 from ..database import get_db
-from typing import Optional , List
-from sqlalchemy import func 
 
 
 
@@ -79,7 +80,7 @@ def deletepost(id: int , db : Session = Depends(get_db), current_user : int = De
     # conn.commit()
     del_post = db.query(models.Post).filter(models.Post.id == id)
     delpost = del_post.first()
-    if delpost == None:
+    if delpost is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"Post with id {id} does not exist")
     if delpost.owner_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail=f"Not authorized to perform the required action")
@@ -97,7 +98,7 @@ def updatepost(id:int,updated_post:schemas.PostUpdate , db : Session = Depends(g
     # conn.commit()
     post_query = db.query(models.Post).filter(models.Post.id == id)
     post_data = post_query.first()
-    if post_data == None:
+    if post_data is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"Post with the id {id} does not exist")
     if post_data.owner_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail=f"Not authorized to perform the required action")
