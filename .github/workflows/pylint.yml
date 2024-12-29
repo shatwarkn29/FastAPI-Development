@@ -1,6 +1,7 @@
-name: Pylinton
+name: Pylint
 
 on:
+  workflow_dispatch: # This enables manual triggering of the workflow
   push:
     paths-ignore:
       - ".github/workflows/*"
@@ -32,7 +33,7 @@ jobs:
 
       - name: Analyze the code with pylint
         run: |
-          pylint --output-format=text $(git ls-files '*.py') > pylint_report.txt
+          pylint $(git ls-files '*.py') > pylint_report.txt
 
       - name: Check Pylint Score
         run: |
