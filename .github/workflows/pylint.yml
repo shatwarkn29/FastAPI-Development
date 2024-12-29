@@ -33,7 +33,7 @@ jobs:
 
       - name: Analyze the code with pylint
         run: |
-          pylint $(git ls-files '*.py') > pylint_report.txt
+          pylint $(git ls-files '*.py') --exit-zero > pylint_report.txt
 
       - name: Check Pylint Score
         run: |
