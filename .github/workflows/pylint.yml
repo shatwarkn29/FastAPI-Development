@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -34,12 +34,6 @@ jobs:
       - name: Analyze the code with pylint
         run: |
           pylint $(git ls-files '*.py') --exit-zero > pylint_report.txt
-
-      - name: Debug Pylint Report Content
-        run: cat pylint_report.txt
-
-      - name: Install bc
-        run: choco install bc -y
 
       - name: Check Pylint Score
         shell: bash
