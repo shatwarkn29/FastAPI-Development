@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 
-from .. import schemas, models, database, oauth2
+from app import schemas, models, database, oauth2
 
 
 router = APIRouter(
@@ -31,4 +31,3 @@ def vote(vote : schemas.Vote , db : Session = Depends(database.get_db) , current
         db.commit()
 
         return {"message":"successfully deleted vote"}
-    

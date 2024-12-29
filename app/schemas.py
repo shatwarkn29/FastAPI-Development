@@ -28,7 +28,7 @@ class Userout(BaseModel):
     email: EmailStr
     created_at: datetime
 
-    class config:
+    class Config:
         from_attributes = True
 
 class PostResponse(PostBase):

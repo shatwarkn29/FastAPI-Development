@@ -3,10 +3,8 @@ from typing import Optional, List
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
-from .. import models, schemas, utils, oauth2 
-from ..database import get_db
-
-
+from app import models, schemas, utils, oauth2 
+from app.database import get_db
 
 router = APIRouter(
     prefix="/posts",
@@ -83,7 +81,7 @@ def deletepost(id: int , db : Session = Depends(get_db), current_user : int = De
     if delpost is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"Post with id {id} does not exist")
     if delpost.owner_id != current_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail=f"Not authorized to perform the required action")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail=f"{'Not authorized to perform the required action'}")
     del_post.delete(synchronize_session=False)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
@@ -101,7 +99,7 @@ def updatepost(id:int,updated_post:schemas.PostUpdate , db : Session = Depends(g
     if post_data is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"Post with the id {id} does not exist")
     if post_data.owner_id != current_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail=f"Not authorized to perform the required action")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail=f"{'Not authorized to perform the required action'}")
     post_query.update(updated_post.dict(),synchronize_session=False)
     db.commit()
     return post_query.first()
