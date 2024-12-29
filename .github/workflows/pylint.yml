@@ -11,17 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check for Existing Python Installation
-        run: |
-          python3 --version > /dev/null 2>&1 
-          if [ $? -eq 0 ]; then
-            echo "Python 3 is already installed."
-          else
-            echo "Installing Python 3.12.3"
-            uses: actions/setup-python@v3
-            with:
-              python-version: 3.12.3
-          fi
+      - name: Set up Python 3.12.3
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.12.3
 
       - name: Cache Python dependencies
         uses: actions/cache@v3
@@ -39,7 +32,7 @@ jobs:
 
       - name: Analyze the code with pylint
         run: |
-          pylint $(git ls-files '*.py') > pylint_report.txt
+          pylint --output-format=text $(git ls-files '*.py') > pylint_report.txt
 
       - name: Check Pylint Score
         run: |
