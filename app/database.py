@@ -7,15 +7,13 @@ This module sets up the SQLAlchemy database connection, session maker, and base 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from .config import Settings
+from app.config import settings  # Adjust the import path if needed
 
-# Construct the database URL
 SQLALCHEMY_DATABASE_URL = (
-    f"postgresql://{Settings.database_username}:"
-    f"{Settings.database_password}@{Settings.database_hostname}:"
-    f"{Settings.database_port}/{Settings.database_name}"
+    f"postgresql://{settings.database_username}:"
+    f"{settings.database_password}@{settings.database_hostname}:"
+    f"{settings.database_port}/{settings.database_name}"
 )
-
 # Create the SQLAlchemy engine
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
