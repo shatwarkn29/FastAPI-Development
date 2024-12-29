@@ -35,15 +35,18 @@ jobs:
         run: |
           pylint $(git ls-files '*.py') --exit-zero > pylint_report.txt
 
+      - name: Display Pylint Report
+        run: cat pylint_report.txt
+
       - name: Check Pylint Score
+        shell: bash
         run: |
-          # Extract the final score from the report (adjust the regex if needed)
-          score=$(grep -oP 'Your code has been rated at \K\d+\.\d+' pylint_report.txt) 
-          # Set a threshold for acceptable score (e.g., 8.0)
+          score=$(grep -oP 'Your code has been rated at \K\d+\.\d+' pylint_report.txt || echo "0")
+          echo "Pylint score: $score"
           threshold=8.0
           if (( $(echo "$score > $threshold" | bc -l) )); then
             echo "Pylint score ($score) meets the threshold ($threshold)"
           else
             echo "Pylint score ($score) does not meet the threshold ($threshold)"
-            exit 1 
+            exit 1
           fi
